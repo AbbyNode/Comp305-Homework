@@ -4,4 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/SceneSelector/SceneSelector.unity
+    guid: 673b97231a860ed4a9534895f13a7d04
+  - enabled: 1
+    path: Assets/AI/Scenes/FlockGroups.unity
+    guid: 0c08baa79ddca0a44bad0e2f74bf2ef5
+  - enabled: 1
+    path: Assets/AI/Scenes/FlockSingle.unity
+    guid: d63ffe140959a34428772b217dce4c29
