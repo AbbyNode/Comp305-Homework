@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FlockBiod : MonoBehaviour {
-	private float nearbyRadius = 500;
+	private float nearbyRadius = 3;
 	private GameObject[] nearbyBoids;
 
-	private float boidDetectFrequency = 2;
+	private float boidDetectFrequency = 1;
 	private float timeSinceDetect;
 
 	private float rotationSpeed = 2;
-	private float moveSpeed = 1;
+	private float moveSpeed = 2;
 
-	private float separationWeight = 2;
+	private float separationWeight = 0.8f;
 
 	void Start() {
 		timeSinceDetect = 0;
@@ -25,12 +25,8 @@ public class FlockBiod : MonoBehaviour {
 			DetectNearbyBoids();
 			timeSinceDetect = 0;
 		}
-
-		AlignmentWithNearbyBoids();
-
-		CohesionWithNearbyBoids();
-
-		SeparationFromNearbyBoids();
+		
+		Flock();
 	}
 
 	private void DetectNearbyBoids() {
@@ -41,6 +37,30 @@ public class FlockBiod : MonoBehaviour {
 		}
 	}
 
+	private void Flock() {
+		float totalRotation = 0;
+		Vector3 totalPos = Vector3.zero;
+		Vector3 totalDist = Vector3.zero;
+
+		for (int i = 0; i < nearbyBoids.Length; i++) {
+			totalRotation += nearbyBoids[i].transform.rotation.z;
+			totalPos += nearbyBoids[i].transform.position;
+			totalDist += (nearbyBoids[i].transform.position - this.transform.position);
+		}
+
+		float aveRotation = totalRotation / nearbyBoids.Length;
+		Quaternion newRotation = transform.rotation;
+		newRotation.z = aveRotation;
+		transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * rotationSpeed);
+
+		Vector3 avePos = totalPos / nearbyBoids.Length;
+		transform.position = Vector3.Lerp(transform.position, avePos, Time.deltaTime * moveSpeed);
+
+		Vector3 aveDist = totalDist / nearbyBoids.Length;
+		transform.position = Vector3.Lerp(transform.position, transform.position - (aveDist * separationWeight), Time.deltaTime * moveSpeed);
+	}
+
+	/*
 	private void AlignmentWithNearbyBoids() {
 		// Alignment
 		float totalRotation = 0;
@@ -51,7 +71,8 @@ public class FlockBiod : MonoBehaviour {
 
 		Quaternion newRotation = transform.rotation;
 		newRotation.z = aveRotation;
-		transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * rotationSpeed);
+		transform.rotation = Quaternion.Lerp(transform.rotation, newRotation
+			, Time.deltaTime * rotationSpeed);
 	}
 
 	private void CohesionWithNearbyBoids() {
@@ -62,7 +83,8 @@ public class FlockBiod : MonoBehaviour {
 		}
 		Vector3 avePos = totalPos / nearbyBoids.Length;
 
-		transform.position = Vector3.Lerp(transform.position, avePos, Time.deltaTime * moveSpeed);
+		transform.position = Vector3.Lerp(transform.position, avePos
+			, Time.deltaTime * moveSpeed);
 	}
 
 	private void SeparationFromNearbyBoids() {
@@ -73,8 +95,10 @@ public class FlockBiod : MonoBehaviour {
 		}
 		Vector3 aveDist = totalDist / nearbyBoids.Length;
 
-		transform.position = Vector3.Lerp(transform.position, -aveDist * separationWeight, Time.deltaTime * moveSpeed);
+		transform.position = Vector3.Lerp(transform.position, transform.position - (aveDist * separationWeight)
+			, Time.deltaTime * moveSpeed);
 	}
+	*/
 }
 
 // https://gamedevelopment.tutsplus.com/tutorials/3-simple-rules-of-flocking-behaviors-alignment-cohesion-and-separation--gamedev-3444
