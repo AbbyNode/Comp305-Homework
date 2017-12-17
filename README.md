@@ -1,2 +1,2 @@
 # Comp305-Homework
-[https://abbynode.github.io/Comp305-Homework/](Play WebGL builds!)
+[Play WebGL Builds!](https://abbynode.github.io/Comp305-Homework/)
