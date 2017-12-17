@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowMouse : MonoBehaviour {
-	public Camera cam;
+	private Camera cam;
 
 	private float maxFollowDist = 10;
 	private float rotationSpeed = 4;
 	private float moveSpeed = 1;
 	private float pullWeight = 0.4f;
+
+	void Start() {
+		cam = Camera.main;
+	}
 
 	void Update() {
 		Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);

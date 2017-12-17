@@ -14,7 +14,13 @@ public class FlockBiod : MonoBehaviour {
 	private float moveSpeed = 2;
 
 	private float separationWeight = 0.8f;
-	private float separationWeightClose = 1.2f;
+	private float separationWeightClose = 2f;
+
+	public GameObject[] NearbyBoids {
+		get {
+			return nearbyBoids;
+		}
+	}
 
 	void Start() {
 		timeSinceDetect = 0;
