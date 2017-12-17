@@ -25,7 +25,7 @@ public class FlockBiod : MonoBehaviour {
 			DetectNearbyBoids();
 			timeSinceDetect = 0;
 		}
-		
+
 		Flock();
 	}
 
